@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import 'express-async-errors';
 import express from 'express';
-import { connectMongoose } from './infra/database/mongoose';
+import { connectMongoose } from './core/database/mongoose';
 import { errorHandler } from './core/middlewares/errorHandler';
 
 const app = express();
