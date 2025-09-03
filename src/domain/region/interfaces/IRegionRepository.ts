@@ -1,0 +1,13 @@
+import { RegionEntity } from '../region.entity';
+
+export interface CreateRegionPayload {
+  name: string;
+  geometry: {
+    type: string;
+    coordinates: [number, number][][];
+  };
+}
+
+export interface IRegionRepository {
+  create(payload: CreateRegionPayload): Promise<RegionEntity>;
+}
