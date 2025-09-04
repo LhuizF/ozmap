@@ -1,5 +1,3 @@
-// Em um novo arquivo, ex: region.mapper.ts
-
 import { RegionEntity } from '@/domain/region/region.entity';
 import { IRegionDocument } from '../schemas/region.schema';
 

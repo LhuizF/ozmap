@@ -1,11 +1,16 @@
 import { registry } from '@/core/config/openapi.config';
 import { createRegionSchema } from './dtos/createRegion.dto';
-import { paginationSchema } from '@/core/utils/pagination';
-import { idParamsSchema } from '@/core/utils/idParams';
+import {
+  paginationSchema,
+  paginatedResponseSchema,
+} from '@/shared/dtos/pagination.dto';
+import { idParamsSchema } from '@/shared/dtos/idParams.dto';
 import { updateRegionSchema } from './dtos/updateRegion.dto';
+import { regionResponseSchema } from '@/shared/dtos/regionResponse.dto';
 
 export function registerRegionDocs() {
-  registry.register('Region', createRegionSchema);
+  registry.register('Region', regionResponseSchema);
+  registry.register('Create Region', createRegionSchema);
 
   registry.registerPath({
     method: 'post',
@@ -24,7 +29,7 @@ export function registerRegionDocs() {
     responses: {
       201: {
         description: 'Região criada com sucesso',
-        content: { 'application/json': { schema: createRegionSchema } },
+        content: { 'application/json': { schema: regionResponseSchema } },
       },
       400: {
         description: 'Erro de validação nos dados enviados',
@@ -43,7 +48,11 @@ export function registerRegionDocs() {
     responses: {
       200: {
         description: 'Lista de regiões',
-        content: { 'application/json': { schema: createRegionSchema } },
+        content: {
+          'application/json': {
+            schema: paginatedResponseSchema(regionResponseSchema),
+          },
+        },
       },
     },
   });
@@ -59,7 +68,7 @@ export function registerRegionDocs() {
     responses: {
       200: {
         description: 'Região encontrada',
-        content: { 'application/json': { schema: createRegionSchema } },
+        content: { 'application/json': { schema: regionResponseSchema } },
       },
       404: {
         description: 'Região não encontrada',
@@ -85,7 +94,7 @@ export function registerRegionDocs() {
     responses: {
       200: {
         description: 'Região atualizada com sucesso',
-        content: { 'application/json': { schema: updateRegionSchema } },
+        content: { 'application/json': { schema: regionResponseSchema } },
       },
       404: {
         description: 'Região não encontrada',

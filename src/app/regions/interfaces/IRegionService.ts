@@ -1,6 +1,6 @@
 import { RegionEntity } from '@/domain/region/region.entity';
 import { CreateRegionDto } from '../dtos/createRegion.dto';
-import { PaginatedResponse } from '@/core/utils/pagination';
+import { PaginatedResponseDto } from '@/shared/dtos/pagination.dto';
 import { UpdateRegionDto } from '../dtos/updateRegion.dto';
 
 export interface IRegionService {
@@ -8,7 +8,7 @@ export interface IRegionService {
   listRegions(
     page: number,
     pageSize: number,
-  ): Promise<PaginatedResponse<RegionEntity>>;
+  ): Promise<PaginatedResponseDto<RegionEntity>>;
   getRegionById(id: string): Promise<RegionEntity>;
   updateRegion(
     id: string,

@@ -2,8 +2,8 @@ import { IRegionRepository } from '@/domain/region/interfaces/IRegionRepository'
 import { CreateRegionDto } from './dtos/createRegion.dto';
 import { IRegionService } from './interfaces/IRegionService';
 import { RegionEntity } from '@/domain/region/region.entity';
-import { PaginatedResponse } from '../../core/utils/pagination';
-import { NotFoundError } from '../../core/errors/http.errors';
+import { PaginatedResponseDto } from '@/shared/dtos/pagination.dto';
+import { NotFoundError } from '@/core/errors/http.errors';
 import { UpdateRegionDto } from './dtos/updateRegion.dto';
 
 export class RegionService implements IRegionService {
@@ -16,7 +16,7 @@ export class RegionService implements IRegionService {
   async listRegions(
     page: number,
     pageSize: number,
-  ): Promise<PaginatedResponse<RegionEntity>> {
+  ): Promise<PaginatedResponseDto<RegionEntity>> {
     const [regions, total] = await Promise.all([
       this.regionRepository.list(page, pageSize),
       this.regionRepository.count(),
