@@ -19,4 +19,11 @@ export class RegionController {
     );
     return res.status(200).json(response);
   }
+
+  async getRegionById(req: Request, res: Response) {
+    const { id } = req.params;
+    console.log(id);
+    const region = await this.regionService.getRegionById(id);
+    return res.status(200).json(region);
+  }
 }

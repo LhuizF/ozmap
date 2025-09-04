@@ -6,7 +6,9 @@ import { validateBody } from '@/core/middlewares/validateBody';
 import { createRegionSchema } from './dtos/createRegion.dto';
 import { registry } from '@/core/config/openapi.config';
 import { paginationSchema } from '@/core/utils/pagination';
-import { validateQuery } from '../../core/middlewares/validateQuery';
+import { validateQuery } from '@/core/middlewares/validateQuery';
+import { idParamsSchema } from '@/core/utils/idParams';
+import { validateParams } from '@/core/middlewares/validateParams';
 
 function buildRegionModule() {
   const regionRepository = new RegionRepository();
@@ -56,6 +58,25 @@ function buildRegionModule() {
     },
   });
 
+  registry.registerPath({
+    method: 'get',
+    path: '/regions/{id}',
+    summary: 'Obtém uma região pelo id',
+    request: {
+      params: idParamsSchema,
+    },
+    tags: ['Regions'],
+    responses: {
+      200: {
+        description: 'Região encontrada',
+        content: { 'application/json': { schema: createRegionSchema } },
+      },
+      404: {
+        description: 'Região não encontrada',
+      },
+    },
+  });
+
   return regionController;
 }
 
@@ -71,5 +92,11 @@ export function setupRegionRoutes(app: Express) {
     '/regions',
     validateQuery(paginationSchema),
     controller.listRegions.bind(controller),
+  );
+
+  app.get(
+    '/regions/:id',
+    validateParams(idParamsSchema),
+    controller.getRegionById.bind(controller),
   );
 }

@@ -3,6 +3,7 @@ import { CreateRegionDto } from './dtos/createRegion.dto';
 import { IRegionService } from './interfaces/IRegionService';
 import { RegionEntity } from '@/domain/region/region.entity';
 import { PaginatedResponse } from '../../core/utils/pagination';
+import { NotFoundError } from '../../core/errors/http.errors';
 
 export class RegionService implements IRegionService {
   constructor(private readonly regionRepository: IRegionRepository) {}
@@ -33,5 +34,15 @@ export class RegionService implements IRegionService {
       pageSize,
       totalPages: Math.ceil(total / pageSize),
     };
+  }
+
+  async getRegionById(id: string): Promise<RegionEntity> {
+    const region = await this.regionRepository.findById(id);
+
+    if (!region) {
+      throw new NotFoundError('Região não encontrada');
+    }
+
+    return region;
   }
 }

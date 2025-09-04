@@ -42,4 +42,16 @@ export class RegionRepository implements IRegionRepository {
   async count(): Promise<number> {
     return RegionModel.countDocuments();
   }
+
+  async findById(id: string): Promise<RegionEntity | null> {
+    const region = await RegionModel.findById(id);
+
+    if (!region) return null;
+
+    return new RegionEntity(
+      region._id.toString(),
+      region.name,
+      region.geometry.coordinates,
+    );
+  }
 }

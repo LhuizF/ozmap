@@ -8,4 +8,5 @@ export interface IRegionService {
     page: number,
     pageSize: number,
   ): Promise<PaginatedResponse<RegionEntity>>;
+  getRegionById(id: string): Promise<RegionEntity>;
 }
