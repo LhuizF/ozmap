@@ -23,4 +23,23 @@ export class RegionRepository implements IRegionRepository {
       saved.geometry.coordinates,
     );
   }
+
+  async list(page: number, pageSize: number): Promise<RegionEntity[]> {
+    const regions = await RegionModel.find()
+      .skip((page - 1) * pageSize)
+      .limit(pageSize);
+
+    return regions.map(
+      (region) =>
+        new RegionEntity(
+          region._id.toString(),
+          region.name,
+          region.geometry.coordinates,
+        ),
+    );
+  }
+
+  async count(): Promise<number> {
+    return RegionModel.countDocuments();
+  }
 }

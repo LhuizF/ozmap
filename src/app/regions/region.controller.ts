@@ -11,4 +11,12 @@ export class RegionController {
 
     return res.status(201).json(region);
   }
+
+  async listRegions(req: Request, res: Response) {
+    const response = await this.regionService.listRegions(
+      Number(req.query.page),
+      Number(req.query.pageSize),
+    );
+    return res.status(200).json(response);
+  }
 }
