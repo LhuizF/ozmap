@@ -53,4 +53,14 @@ export class RegionService implements IRegionService {
 
     return this.regionRepository.update(id, updateRegionDto);
   }
+
+  async deleteRegion(id: string): Promise<void> {
+    const regionExists = await this.regionRepository.findById(id);
+
+    if (!regionExists) {
+      throw new NotFoundError('Região não encontrada');
+    }
+
+    await this.regionRepository.delete(id);
+  }
 }

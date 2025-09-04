@@ -47,4 +47,10 @@ export function setupRegionRoutes(app: Express) {
     validateBody(updateRegionSchema),
     controller.updateRegion.bind(controller),
   );
+
+  app.delete(
+    '/regions/:id',
+    validateParams(idParamsSchema),
+    controller.deleteRegion.bind(controller),
+  );
 }

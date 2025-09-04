@@ -24,4 +24,5 @@ export interface IRegionRepository {
     id: string,
     payload: UpdateRegionPayload,
   ): Promise<RegionEntity | null>;
+  delete(id: string): Promise<boolean>;
 }

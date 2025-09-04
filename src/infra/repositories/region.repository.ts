@@ -73,4 +73,9 @@ export class RegionRepository implements IRegionRepository {
       updatedRegion.geometry.coordinates,
     );
   }
+
+  async delete(id: string): Promise<boolean> {
+    const result = await RegionModel.findByIdAndDelete(id);
+    return result !== null;
+  }
 }

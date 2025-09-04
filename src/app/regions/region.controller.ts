@@ -37,4 +37,10 @@ export class RegionController {
     );
     return res.status(200).json(updatedRegion);
   }
+
+  async deleteRegion(req: Request, res: Response) {
+    const { id } = req.params;
+    await this.regionService.deleteRegion(id);
+    return res.status(204).json({ message: 'Região deletada com sucesso!' });
+  }
 }

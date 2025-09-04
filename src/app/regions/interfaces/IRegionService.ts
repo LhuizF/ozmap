@@ -14,4 +14,5 @@ export interface IRegionService {
     id: string,
     updateRegionDto: UpdateRegionDto,
   ): Promise<RegionEntity>;
+  deleteRegion(id: string): Promise<void>;
 }
