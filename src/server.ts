@@ -6,6 +6,7 @@ import { errorHandler } from './core/middlewares/errorHandler';
 import { setupRegionRoutes } from '@/app/regions/region.module';
 import { generateOpenAPIDocument } from './core/config/openapi.config';
 import swaggerUi from 'swagger-ui-express';
+import { notFoundHandler } from './core/middlewares/notFoundHandler';
 
 const app = express();
 app.use(express.json());
@@ -23,6 +24,7 @@ app.use(
 
 connectMongoose();
 
+app.use(notFoundHandler);
 app.use(errorHandler);
 
 app.listen(PORT, () => {

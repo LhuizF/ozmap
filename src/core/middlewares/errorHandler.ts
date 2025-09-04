@@ -10,6 +10,13 @@ export function errorHandler(
   if (err instanceof HttpError) {
     return res.status(err.statusCode).json({ message: err.message });
   }
+
+  if (err instanceof SyntaxError && 'body' in err) {
+    return res.status(400).json({
+      message: 'body inválido.',
+    });
+  }
+
   console.error(err);
   res.status(500).json({ message: 'Internal server error' });
 }
