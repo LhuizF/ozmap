@@ -5,10 +5,10 @@ import {
 } from '@/domain/region/interfaces/IRegionRepository';
 import { RegionEntity } from '@/domain/region/region.entity';
 import { RegionModel } from '../schemas/region.schema';
+import { RegionMapper } from '../mappers/region.mapper';
 
 export class RegionRepository implements IRegionRepository {
   async create(payload: CreateRegionPayload): Promise<RegionEntity> {
-    console.log(payload.geometry.coordinates);
     const regionDoc = new RegionModel({
       name: payload.name,
       geometry: {
@@ -16,13 +16,10 @@ export class RegionRepository implements IRegionRepository {
         coordinates: payload.geometry.coordinates,
       },
     });
+
     const saved = await regionDoc.save();
 
-    return new RegionEntity(
-      saved._id.toString(),
-      saved.name,
-      saved.geometry.coordinates,
-    );
+    return RegionMapper.toEntity(saved);
   }
 
   async list(page: number, pageSize: number): Promise<RegionEntity[]> {
@@ -30,14 +27,7 @@ export class RegionRepository implements IRegionRepository {
       .skip((page - 1) * pageSize)
       .limit(pageSize);
 
-    return regions.map(
-      (region) =>
-        new RegionEntity(
-          region._id.toString(),
-          region.name,
-          region.geometry.coordinates,
-        ),
-    );
+    return regions.map(RegionMapper.toEntity);
   }
 
   async count(): Promise<number> {
@@ -49,11 +39,7 @@ export class RegionRepository implements IRegionRepository {
 
     if (!region) return null;
 
-    return new RegionEntity(
-      region._id.toString(),
-      region.name,
-      region.geometry.coordinates,
-    );
+    return RegionMapper.toEntity(region);
   }
 
   async update(
@@ -67,11 +53,7 @@ export class RegionRepository implements IRegionRepository {
 
     if (!updatedRegion) return null;
 
-    return new RegionEntity(
-      updatedRegion._id.toString(),
-      updatedRegion.name,
-      updatedRegion.geometry.coordinates,
-    );
+    return RegionMapper.toEntity(updatedRegion);
   }
 
   async delete(id: string): Promise<boolean> {

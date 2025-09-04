@@ -92,4 +92,22 @@ export function registerRegionDocs() {
       },
     },
   });
+
+  registry.registerPath({
+    method: 'delete',
+    path: '/regions/{id}',
+    summary: 'Remove uma região pelo id',
+    request: {
+      params: idParamsSchema,
+    },
+    tags: ['Regions'],
+    responses: {
+      204: {
+        description: 'Região removida com sucesso',
+      },
+      404: {
+        description: 'Região não encontrada',
+      },
+    },
+  });
 }

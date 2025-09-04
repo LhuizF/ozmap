@@ -6,6 +6,8 @@ export interface IRegionDocument extends Document {
     type: 'Polygon';
     coordinates: [number, number][][];
   };
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export const RegionSchema = new Schema(
