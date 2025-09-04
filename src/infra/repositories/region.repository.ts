@@ -1,6 +1,7 @@
 import {
   CreateRegionPayload,
   IRegionRepository,
+  UpdateRegionPayload,
 } from '@/domain/region/interfaces/IRegionRepository';
 import { RegionEntity } from '@/domain/region/region.entity';
 import { RegionModel } from '../schemas/region.schema';
@@ -52,6 +53,24 @@ export class RegionRepository implements IRegionRepository {
       region._id.toString(),
       region.name,
       region.geometry.coordinates,
+    );
+  }
+
+  async update(
+    id: string,
+    payload: UpdateRegionPayload,
+  ): Promise<RegionEntity | null> {
+    const updatedRegion = await RegionModel.findByIdAndUpdate(id, payload, {
+      new: true,
+      upsert: false,
+    });
+
+    if (!updatedRegion) return null;
+
+    return new RegionEntity(
+      updatedRegion._id.toString(),
+      updatedRegion.name,
+      updatedRegion.geometry.coordinates,
     );
   }
 }

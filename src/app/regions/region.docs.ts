@@ -2,6 +2,7 @@ import { registry } from '@/core/config/openapi.config';
 import { createRegionSchema } from './dtos/createRegion.dto';
 import { paginationSchema } from '@/core/utils/pagination';
 import { idParamsSchema } from '@/core/utils/idParams';
+import { updateRegionSchema } from './dtos/updateRegion.dto';
 
 export function registerRegionDocs() {
   registry.register('Region', createRegionSchema);
@@ -59,6 +60,32 @@ export function registerRegionDocs() {
       200: {
         description: 'Região encontrada',
         content: { 'application/json': { schema: createRegionSchema } },
+      },
+      404: {
+        description: 'Região não encontrada',
+      },
+    },
+  });
+
+  registry.registerPath({
+    method: 'put',
+    path: '/regions/{id}',
+    summary: 'Atualiza uma região pelo id',
+    request: {
+      params: idParamsSchema,
+      body: {
+        content: {
+          'application/json': {
+            schema: updateRegionSchema,
+          },
+        },
+      },
+    },
+    tags: ['Regions'],
+    responses: {
+      200: {
+        description: 'Região atualizada com sucesso',
+        content: { 'application/json': { schema: updateRegionSchema } },
       },
       404: {
         description: 'Região não encontrada',

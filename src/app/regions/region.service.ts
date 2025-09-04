@@ -4,18 +4,13 @@ import { IRegionService } from './interfaces/IRegionService';
 import { RegionEntity } from '@/domain/region/region.entity';
 import { PaginatedResponse } from '../../core/utils/pagination';
 import { NotFoundError } from '../../core/errors/http.errors';
+import { UpdateRegionDto } from './dtos/updateRegion.dto';
 
 export class RegionService implements IRegionService {
   constructor(private readonly regionRepository: IRegionRepository) {}
 
   createRegion(createRegionDto: CreateRegionDto): Promise<RegionEntity> {
-    return this.regionRepository.create({
-      name: createRegionDto.name,
-      geometry: {
-        type: createRegionDto.geometry.type,
-        coordinates: createRegionDto.geometry.coordinates,
-      },
-    });
+    return this.regionRepository.create(createRegionDto);
   }
 
   async listRegions(
@@ -44,5 +39,18 @@ export class RegionService implements IRegionService {
     }
 
     return region;
+  }
+
+  async updateRegion(
+    id: string,
+    updateRegionDto: UpdateRegionDto,
+  ): Promise<RegionEntity> {
+    const regionExists = await this.regionRepository.findById(id);
+
+    if (!regionExists) {
+      throw new NotFoundError('Região não encontrada');
+    }
+
+    return this.regionRepository.update(id, updateRegionDto);
   }
 }

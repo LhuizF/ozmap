@@ -26,4 +26,15 @@ export class RegionController {
     const region = await this.regionService.getRegionById(id);
     return res.status(200).json(region);
   }
+
+  async updateRegion(req: Request, res: Response) {
+    const { id } = req.params;
+    const updateRegionDto = req.body;
+
+    const updatedRegion = await this.regionService.updateRegion(
+      id,
+      updateRegionDto,
+    );
+    return res.status(200).json(updatedRegion);
+  }
 }

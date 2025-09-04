@@ -8,6 +8,7 @@ import { paginationSchema } from '@/core/utils/pagination';
 import { validateQuery } from '@/core/middlewares/validateQuery';
 import { idParamsSchema } from '@/core/utils/idParams';
 import { validateParams } from '@/core/middlewares/validateParams';
+import { updateRegionSchema } from './dtos/updateRegion.dto';
 import { registerRegionDocs } from './region.docs';
 
 function buildRegionModule() {
@@ -38,5 +39,12 @@ export function setupRegionRoutes(app: Express) {
     '/regions/:id',
     validateParams(idParamsSchema),
     controller.getRegionById.bind(controller),
+  );
+
+  app.put(
+    '/regions/:id',
+    validateParams(idParamsSchema),
+    validateBody(updateRegionSchema),
+    controller.updateRegion.bind(controller),
   );
 }
