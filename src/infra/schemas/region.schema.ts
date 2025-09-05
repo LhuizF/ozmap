@@ -28,4 +28,7 @@ export const RegionSchema = new Schema(
   { timestamps: true },
 );
 
+//
+RegionSchema.index({ geometry: '2dsphere' });
+
 export const RegionModel = model<IRegionDocument>('Region', RegionSchema);
