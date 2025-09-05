@@ -6,17 +6,21 @@ export interface Point {
   latitude: number;
 }
 
+export interface PointWithDistance extends Point {
+  distance: number;
+}
+
 export interface IRegionSearchService {
   listRegionsByPoint(
     point: Point,
     page: number,
     pageSize: number,
   ): Promise<PaginatedResponseDto<RegionEntity>>;
-  // listRegionsByDistance(
-  //   lat: number,
-  //   long: number,
-  //   distance: number,
-  // ): Promise<PaginatedResponseDto<RegionEntity[]>>;
+  listRegionsByDistance(
+    pointWithDistance: PointWithDistance,
+    page: number,
+    pageSize: number,
+  ): Promise<PaginatedResponseDto<RegionEntity>>;
   // listRegionsByAddress(
   //   address: string,
   // ): Promise<PaginatedResponseDto<RegionEntity[]>>;

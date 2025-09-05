@@ -14,6 +14,22 @@ export class RegionSearchController {
 
     res.status(200).json(response);
   }
-  // listRegionsByDistance(req: Request, res: Response) {}
+
+  async listRegionsByDistance(req: Request, res: Response) {
+    const { longitude, latitude, distance, page, pageSize } = req.query;
+
+    const response = await this.regionSearchService.listRegionsByDistance(
+      {
+        longitude: Number(longitude),
+        latitude: Number(latitude),
+        distance: Number(distance),
+      },
+      Number(page),
+      Number(pageSize),
+    );
+
+    res.status(200).json(response);
+  }
+
   // listRegionsByAddress(req: Request, res: Response) {}
 }

@@ -97,4 +97,31 @@ export class RegionRepository implements IRegionRepository {
       total,
     };
   }
+
+  async findByDistance(
+    longitude: number,
+    latitude: number,
+    radiusInRadians: number,
+    page: number,
+    pageSize: number,
+  ): Promise<FindAndCountRegionResponse> {
+    const query = {
+      geometry: {
+        $geoWithin: {
+          $centerSphere: [[longitude, latitude], radiusInRadians],
+        },
+      },
+    };
+
+    const regions = await RegionModel.find(query)
+      .skip((page - 1) * pageSize)
+      .limit(pageSize);
+
+    const total = await RegionModel.countDocuments(query);
+
+    return {
+      regions: regions.map(RegionMapper.toEntity),
+      total,
+    };
+  }
 }

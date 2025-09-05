@@ -46,4 +46,21 @@ export interface IRegionRepository {
     page: number,
     pageSize: number,
   ): Promise<FindAndCountRegionResponse>;
+
+  /**
+   * Encontra regiões  a uma determinada distância de um ponto
+   * @param longitude Longitude do ponto.
+   * @param latitude Latitude do ponto.
+   * @param radiusInRadians Distância em radianos.
+   * @param page O número da página.
+   * @param pageSize O número de itens por página.
+   */
+
+  findByDistance(
+    longitude: number,
+    latitude: number,
+    radiusInRadians: number,
+    page: number,
+    pageSize: number,
+  ): Promise<FindAndCountRegionResponse>;
 }
