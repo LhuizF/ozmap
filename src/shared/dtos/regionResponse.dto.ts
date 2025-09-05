@@ -1,12 +1,16 @@
 import { z } from '@/core/config/zod.config';
 
 export const regionResponseSchema = z.object({
-  id: z.string().openapi({ description: 'Identificador único da região' }),
-  name: z.string().min(3).max(100).openapi({ description: 'Nome da região' }),
+  id: z.string().openapi({ description: 'description.idRegion' }),
+  name: z
+    .string()
+    .min(3)
+    .max(100)
+    .openapi({ description: 'description.nameRegion' }),
   geometry: z.object({
     type: z
       .literal('Polygon')
-      .openapi({ description: 'Tipo de geometria, sempre Polygon' }),
+      .openapi({ description: 'description.geometryType' }),
     coordinates: z
       .array(
         z.array(
@@ -16,25 +20,23 @@ export const regionResponseSchema = z.object({
                 .number()
                 .min(-180)
                 .max(180)
-                .openapi({ description: 'Longitude da localização' }),
+                .openapi({ description: 'description.longitude' }),
               z
                 .number()
                 .min(-90)
                 .max(90)
-                .openapi({ description: 'Latitude da localização' }),
+                .openapi({ description: 'description.latitude' }),
             ])
             .transform((arr) => arr as [number, number]),
         ),
       )
       .nonempty()
       .openapi({
-        description: 'Coordenadas do polígono em GeoJSON',
+        description: 'description.coordinates',
       }),
   }),
-  createdAt: z.date().openapi({ description: 'Data de criação da região' }),
-  updatedAt: z
-    .date()
-    .openapi({ description: 'Data da última atualização da região' }),
+  createdAt: z.date().openapi({ description: 'description.createdAt' }),
+  updatedAt: z.date().openapi({ description: 'description.updatedAt' }),
 });
 
 export type regionResponseDto = z.infer<typeof regionResponseSchema>;

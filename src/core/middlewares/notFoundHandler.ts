@@ -6,5 +6,6 @@ export function notFoundHandler(
   _res: Response,
   next: NextFunction,
 ) {
-  next(new HttpError(`Rota '${req.originalUrl}' não encontrada`, 404));
+  const message = req.t('errors.routeNotFound', { route: req.originalUrl });
+  next(new HttpError(message, 404));
 }

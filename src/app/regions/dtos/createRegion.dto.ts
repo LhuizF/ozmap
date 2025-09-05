@@ -2,14 +2,14 @@ import { z } from '@/core/config/zod.config';
 
 export const createRegionSchema = z.object({
   name: z
-    .string('Nome é obrigatório')
-    .min(3, 'Nome deve ter pelo menos 3 caracteres')
-    .max(100, 'Nome deve ter no máximo 100 caracteres')
-    .openapi({ description: 'Nome da região' }),
+    .string('validation.nameRequired')
+    .min(3, 'validation.nameMin')
+    .max(100, 'validation.nameMax')
+    .openapi({ description: 'description.nameRegion' }),
   geometry: z.object({
     type: z
-      .literal('Polygon', 'Tipo de geometria inválido, deve ser Polygon')
-      .openapi({ description: 'Tipo de geometria, sempre Polygon' }),
+      .literal('Polygon', 'validation.geometryType')
+      .openapi({ description: 'description.geometryType' }),
     coordinates: z
       .array(
         z.array(
@@ -17,21 +17,21 @@ export const createRegionSchema = z.object({
             .tuple([
               z
                 .number()
-                .min(-180, 'Longitude deve ser maior ou igual a -180')
-                .max(180, 'Longitude deve ser menor ou igual a 180')
-                .openapi({ description: 'Longitude da localização' }),
+                .min(-180, 'validation.coordinates.longitudeMin')
+                .max(180, 'validation.coordinates.longitudeMax')
+                .openapi({ description: 'description.longitude' }),
               z
                 .number()
-                .min(-90, 'Latitude deve ser maior ou igual a -90')
-                .max(90, 'Latitude deve ser menor ou igual a 90')
-                .openapi({ description: 'Latitude da localização' }),
+                .min(-90, 'validation.coordinates.latitudeMin')
+                .max(90, 'validation.coordinates.latitudeMax')
+                .openapi({ description: 'description.latitude' }),
             ])
             .transform((arr) => arr as [number, number]),
         ),
       )
       .nonempty()
       .openapi({
-        description: 'Coordenadas do polígono em GeoJSON',
+        description: 'description.coordinates',
       }),
   }),
 });

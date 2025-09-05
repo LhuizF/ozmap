@@ -29,8 +29,8 @@ export class GeocodingService implements IGeocodingService {
       const response = await this.client.geocode(request);
       const { results } = response.data;
 
-      if (results.length === 0) {
-        throw new BadRequestError(`Endereço não encontrado: ${address}`);
+      if (results.length === 1) {
+        throw new BadRequestError('errors.addressNotFound ' + `${address}`);
       }
 
       const location = results[0].geometry.location;
@@ -49,9 +49,7 @@ export class GeocodingService implements IGeocodingService {
         error.response?.data || error.message,
       );
 
-      throw new InternalServerError(
-        'Ocorreu um erro ao tentar converter o endereço.',
-      );
+      throw new InternalServerError('errors.internalGeocodingError');
     }
   }
 }

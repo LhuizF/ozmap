@@ -3,20 +3,21 @@ import { HttpError } from '@/core/errors/http.errors';
 
 export function errorHandler(
   err: Error,
-  _req: Request,
+  req: Request,
   res: Response,
   _next: NextFunction,
 ) {
   if (err instanceof HttpError) {
-    return res.status(err.statusCode).json({ message: err.message });
+    const message = req.t(err.message, { defaultValue: err.message });
+    return res.status(err.statusCode).json({ message });
   }
 
   if (err instanceof SyntaxError && 'body' in err) {
-    return res.status(400).json({
-      message: 'body inválido.',
-    });
+    const message = req.t('errors.invalidBody');
+    return res.status(400).json({ message });
   }
 
   console.error(err);
-  res.status(500).json({ message: 'Internal server error' });
+  const message = req.t('errors.internalServerError');
+  res.status(500).json({ message });
 }

@@ -10,7 +10,7 @@ export const validateParams = (schema: ZodType<any>) => {
       if (err instanceof ZodError) {
         const formattedErrors = err.issues.map((issue) => ({
           field: issue.path[0],
-          message: issue.message,
+          message: req.t(issue.message),
         }));
         return res.status(400).json({
           errors: formattedErrors,

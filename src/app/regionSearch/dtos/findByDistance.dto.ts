@@ -3,7 +3,7 @@ import { pointSchema } from './point.dto';
 
 export const findByDistanceSchema = pointSchema.extend({
   distance: z.coerce
-    .number()
-    .min(0, 'A distância deve ser um número positivo')
-    .describe('Distance em metros'),
+    .number('validation.distance')
+    .min(0, 'validation.distanceMin')
+    .describe('description.distance'),
 });

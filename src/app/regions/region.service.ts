@@ -35,7 +35,7 @@ export class RegionService implements IRegionService {
     const region = await this.regionRepository.findById(id);
 
     if (!region) {
-      throw new NotFoundError('Região não encontrada');
+      throw new NotFoundError('errors.regionNotFound');
     }
 
     return region;
@@ -48,7 +48,7 @@ export class RegionService implements IRegionService {
     const regionExists = await this.regionRepository.findById(id);
 
     if (!regionExists) {
-      throw new NotFoundError('Região não encontrada');
+      throw new NotFoundError('errors.regionNotFound');
     }
 
     return this.regionRepository.update(id, updateRegionDto);
@@ -58,7 +58,7 @@ export class RegionService implements IRegionService {
     const regionExists = await this.regionRepository.findById(id);
 
     if (!regionExists) {
-      throw new NotFoundError('Região não encontrada');
+      throw new NotFoundError('errors.regionNotFound');
     }
 
     await this.regionRepository.delete(id);
