@@ -1,12 +1,8 @@
 import mongoose from 'mongoose';
+import { env } from '@/core/config/env.config';
 
 export const connectMongoose = async () => {
-  const mongoURI = process.env.MONGO_URI;
-
-  if (!mongoURI) {
-    console.error('MONGO_URI not defined in environment');
-    process.exit(1);
-  }
+  const mongoURI = env.MONGO_URI;
 
   try {
     await mongoose.connect(mongoURI);

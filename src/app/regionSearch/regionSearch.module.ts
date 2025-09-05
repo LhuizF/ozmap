@@ -9,14 +9,10 @@ import { paginationSchema } from '@/shared/dtos/pagination.dto';
 import { findByDistanceSchema } from './dtos/findByDistance.dto';
 import { findByAddressSchema } from './dtos/findByAddress.dto';
 import { GeocodingService } from './geocoding.service';
+import { env } from '@/core/config/env.config';
 
 function buildRegionSearchModule() {
-  const googleGeocodingApiKey = process.env.GOOGLE_GEOCODING_API_KEY;
-
-  if (!googleGeocodingApiKey) {
-    console.error('GOOGLE_GEOCODING_API_KEY not defined in environment');
-    process.exit(1);
-  }
+  const googleGeocodingApiKey = env.GOOGLE_GEOCODING_API_KEY;
 
   const regionRepository = new RegionRepository();
   const geocodingService = new GeocodingService(googleGeocodingApiKey);

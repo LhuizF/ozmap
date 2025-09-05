@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import 'express-async-errors';
 import express, { RequestHandler } from 'express';
 import { connectMongoose } from './core/database/mongoose';
@@ -8,11 +7,12 @@ import { generateOpenAPIDocument } from './core/config/openapi.config';
 import swaggerUi from 'swagger-ui-express';
 import { notFoundHandler } from './core/middlewares/notFoundHandler';
 import { setupRegionSearchRoutes } from './app/regionSearch/regionSearch.module';
+import { env } from './core/config/env.config';
 
 const app = express();
 app.use(express.json());
 
-const PORT = process.env.PORT || 3333;
+const PORT = env.PORT || 3333;
 
 setupRegionRoutes(app);
 setupRegionSearchRoutes(app);
