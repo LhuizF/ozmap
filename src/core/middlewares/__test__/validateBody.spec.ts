@@ -1,40 +1,26 @@
 import 'mocha';
 import { expect } from 'chai';
-import { Request, Response, NextFunction } from 'express';
-import { z } from 'zod';
+import sinon from 'sinon';
+import { Request, Response } from 'express';
+import { z, ZodType } from 'zod';
 import { validateBody } from '@/core/middlewares/validateBody';
 
 describe('validateBody Middleware', () => {
   const testSchema = z.object({
-    name: z.string().min(3),
+    name: z.string().min(3, 'error message'),
   });
 
   let req: Partial<Request>;
   let res: Partial<Response>;
-  let next: NextFunction;
-  let nextCalled: boolean;
-  let capturedStatus: number;
-  let capturedJson: any;
+  let next: sinon.SinonSpy;
 
   beforeEach(() => {
     req = { body: {} };
-    nextCalled = false;
-    capturedStatus = 0;
-    capturedJson = null;
-
     res = {
-      status: (statusCode: number) => {
-        capturedStatus = statusCode;
-        return res as Response;
-      },
-      json: (data: any) => {
-        capturedJson = data;
-        return res as Response;
-      },
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub().returnsThis(),
     };
-    next = () => {
-      nextCalled = true;
-    };
+    next = sinon.spy();
   });
 
   it('deve chamar next se o body for válido', () => {
@@ -43,7 +29,7 @@ describe('validateBody Middleware', () => {
 
     middleware(req as Request, res as Response, next);
 
-    expect(nextCalled).to.be.equal(true);
+    expect(next.calledOnce).to.be.equal(true);
   });
 
   it('deve retornar status 400 se o body for inválido', () => {
@@ -52,8 +38,31 @@ describe('validateBody Middleware', () => {
 
     middleware(req as Request, res as Response, next);
 
-    expect(nextCalled).to.be.equal(false);
-    expect(capturedStatus).to.equal(400);
-    expect(capturedJson.errors[0].field).to.equal('name');
+    expect(next.called).to.be.equal(false);
+    expect((res.status as sinon.SinonStub).calledOnceWith(400)).to.equal(true);
+    expect(
+      (res.json as sinon.SinonStub).calledOnceWith({
+        errors: [{ field: 'name', message: 'error message' }],
+      }),
+    ).to.equal(true);
+  });
+
+  it('deve retornar 400 e mensagem de erro quando ocorre exceção inesperada', () => {
+    const schema = {
+      parse: () => {
+        throw new Error('Erro inesperado');
+      },
+    } as unknown as ZodType<any>;
+
+    const middleware = validateBody(schema);
+    middleware(req as Request, res as Response, next);
+
+    expect((res.status as sinon.SinonStub).calledOnceWith(400)).to.equal(true);
+    expect(
+      (res.json as sinon.SinonStub).calledOnceWith({
+        message: 'Erro inesperado',
+      }),
+    ).to.equal(true);
+    expect(next.notCalled).to.equal(true);
   });
 });
