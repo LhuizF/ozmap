@@ -2,8 +2,8 @@ import { RegionEntity } from '@/domain/region/region.entity';
 import { PaginatedResponseDto } from '@/shared/dtos/pagination.dto';
 
 export interface Point {
-  long: number;
-  lat: number;
+  longitude: number;
+  latitude: number;
 }
 
 export interface IRegionSearchService {

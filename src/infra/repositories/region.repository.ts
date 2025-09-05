@@ -63,8 +63,8 @@ export class RegionRepository implements IRegionRepository {
   }
 
   async findByPoint(
-    long: number,
-    lat: number,
+    longitude: number,
+    latitude: number,
     page: number,
     pageSize: number,
   ): Promise<FindAndCountRegionResponse> {
@@ -73,7 +73,7 @@ export class RegionRepository implements IRegionRepository {
         $geoIntersects: {
           $geometry: {
             type: 'Point',
-            coordinates: [long, lat],
+            coordinates: [longitude, latitude],
           },
         },
       },
@@ -86,7 +86,7 @@ export class RegionRepository implements IRegionRepository {
         $geoIntersects: {
           $geometry: {
             type: 'Point',
-            coordinates: [long, lat],
+            coordinates: [longitude, latitude],
           },
         },
       },

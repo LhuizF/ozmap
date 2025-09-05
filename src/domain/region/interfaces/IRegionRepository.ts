@@ -34,15 +34,15 @@ export interface IRegionRepository {
 
   /**
    * Encontra regiões que contêm um ponto específico.
-   * @param long Longitude do ponto.
-   * @param lat Latitude do ponto.
+   * @param longitude Longitude do ponto.
+   * @param latitude Latitude do ponto.
    * @param page O número da página.
    * @param pageSize O número de itens por página.
    */
 
   findByPoint(
-    long: number,
-    lat: number,
+    longitude: number,
+    latitude: number,
     page: number,
     pageSize: number,
   ): Promise<FindAndCountRegionResponse>;

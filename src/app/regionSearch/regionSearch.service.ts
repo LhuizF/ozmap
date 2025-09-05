@@ -10,10 +10,10 @@ export class RegionSearchService implements IRegionSearchService {
     page: number,
     pageSize: number,
   ): Promise<PaginatedResponseDto<RegionEntity>> {
-    const { long, lat } = point;
+    const { longitude, latitude } = point;
     const { regions, total } = await this.regionRepository.findByPoint(
-      long,
-      lat,
+      longitude,
+      latitude,
       page,
       pageSize,
     );

@@ -5,9 +5,9 @@ export class RegionSearchController {
   constructor(private readonly regionSearchService: IRegionSearchService) {}
 
   async listRegionsByPoint(req: Request, res: Response) {
-    const { long, lat, page, pageSize } = req.query;
+    const { longitude, latitude, page, pageSize } = req.query;
     const response = await this.regionSearchService.listRegionsByPoint(
-      { long: Number(long), lat: Number(lat) },
+      { longitude: Number(longitude), latitude: Number(latitude) },
       Number(page),
       Number(pageSize),
     );
