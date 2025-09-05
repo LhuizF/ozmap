@@ -1,4 +1,3 @@
-// src/infra/mappers/region.mapper.spec.ts
 import 'mocha';
 import { expect } from 'chai';
 import { RegionMapper } from '@/infra/mappers/region.mapper';

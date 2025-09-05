@@ -3,11 +3,14 @@ import { expect } from 'chai';
 import { Request, Response, NextFunction } from 'express';
 import { errorHandler } from '@/core/middlewares/errorHandler';
 import { NotFoundError } from '@/core/errors/http.errors';
+import sinon from 'sinon';
+import { i18next } from '@/core/config/i18n.config';
 
 describe('errorHandler Middleware', () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let next: NextFunction;
+  let tStub: sinon.SinonStub;
 
   let capturedStatus: number;
   let capturedJson: any;
@@ -31,6 +34,12 @@ describe('errorHandler Middleware', () => {
     };
 
     next = () => {};
+
+    tStub = sinon.stub(i18next, 't').callsFake((key: string) => key);
+  });
+
+  afterEach(() => {
+    tStub.restore();
   });
 
   it('deve lidar com um HttpError e retornar o status e a mensagem corretos', () => {
