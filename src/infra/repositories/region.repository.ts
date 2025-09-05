@@ -1,5 +1,6 @@
 import {
   CreateRegionPayload,
+  FindAndCountRegionResponse,
   IRegionRepository,
   UpdateRegionPayload,
 } from '@/domain/region/interfaces/IRegionRepository';
@@ -59,5 +60,41 @@ export class RegionRepository implements IRegionRepository {
   async delete(id: string): Promise<boolean> {
     const result = await RegionModel.findByIdAndDelete(id);
     return result !== null;
+  }
+
+  async findByPoint(
+    long: number,
+    lat: number,
+    page: number,
+    pageSize: number,
+  ): Promise<FindAndCountRegionResponse> {
+    const regions = await RegionModel.find({
+      geometry: {
+        $geoIntersects: {
+          $geometry: {
+            type: 'Point',
+            coordinates: [long, lat],
+          },
+        },
+      },
+    })
+      .skip((page - 1) * pageSize)
+      .limit(pageSize);
+
+    const total = await RegionModel.countDocuments({
+      geometry: {
+        $geoIntersects: {
+          $geometry: {
+            type: 'Point',
+            coordinates: [long, lat],
+          },
+        },
+      },
+    });
+
+    return {
+      regions: regions.map(RegionMapper.toEntity),
+      total,
+    };
   }
 }
