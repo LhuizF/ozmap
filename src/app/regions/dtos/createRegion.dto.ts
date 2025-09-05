@@ -5,11 +5,11 @@ export const createRegionSchema = z.object({
     .string('validation.nameRequired')
     .min(3, 'validation.nameMin')
     .max(100, 'validation.nameMax')
-    .openapi({ description: 'description.nameRegion' }),
+    .openapi({ description: 'Nome da região' }),
   geometry: z.object({
     type: z
       .literal('Polygon', 'validation.geometryType')
-      .openapi({ description: 'description.geometryType' }),
+      .openapi({ description: 'Tipo da geometria, deve ser "Polygon"' }),
     coordinates: z
       .array(
         z.array(
@@ -19,19 +19,19 @@ export const createRegionSchema = z.object({
                 .number()
                 .min(-180, 'validation.coordinates.longitudeMin')
                 .max(180, 'validation.coordinates.longitudeMax')
-                .openapi({ description: 'description.longitude' }),
+                .openapi({ description: 'Longitude' }),
               z
                 .number()
                 .min(-90, 'validation.coordinates.latitudeMin')
                 .max(90, 'validation.coordinates.latitudeMax')
-                .openapi({ description: 'description.latitude' }),
+                .openapi({ description: 'Latitude' }),
             ])
             .transform((arr) => arr as [number, number]),
         ),
       )
       .nonempty()
       .openapi({
-        description: 'description.coordinates',
+        description: 'Coordenadas do polígono em GeoJSON',
       }),
   }),
 });

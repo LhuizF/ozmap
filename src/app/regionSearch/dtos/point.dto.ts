@@ -5,12 +5,12 @@ export const pointSchema = z.object({
     .number()
     .min(-180, 'validation.coordinates.longitudeMin')
     .max(180, 'validation.coordinates.longitudeMax')
-    .describe('description.longitude'),
+    .describe('Longitude'),
   latitude: z.coerce
     .number()
     .min(-90, 'validation.coordinates.latitudeMin')
     .max(90, 'validation.coordinates.latitudeMax')
-    .describe('description.latitude'),
+    .describe('Latitude'),
 });
 
 export type PointDto = z.infer<typeof pointSchema>;

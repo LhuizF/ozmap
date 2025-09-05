@@ -4,5 +4,5 @@ export const findByAddressSchema = z.object({
   address: z
     .string()
     .min(10, 'validation.addressMin')
-    .describe('description.address'),
+    .describe('Endereço a ser pesquisado'),
 });
