@@ -29,8 +29,8 @@ export class GeocodingService implements IGeocodingService {
       const response = await this.client.geocode(request);
       const { results } = response.data;
 
-      if (results.length === 1) {
-        throw new BadRequestError('errors.addressNotFound ' + `${address}`);
+      if (results.length === 0) {
+        throw new BadRequestError('errors.addressNotFound', { address });
       }
 
       const location = results[0].geometry.location;

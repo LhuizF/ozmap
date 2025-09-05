@@ -7,8 +7,9 @@ export function errorHandler(
   res: Response,
   _next: NextFunction,
 ) {
+  console.log('Handling HttpError:', req.t);
   if (err instanceof HttpError) {
-    const message = req.t(err.message, { defaultValue: err.message });
+    const message = req.t(err.message, { ...err.params });
     return res.status(err.statusCode).json({ message });
   }
 
