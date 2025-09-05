@@ -13,9 +13,13 @@ import { env } from '@/core/config/env.config';
 
 function buildRegionSearchModule() {
   const googleGeocodingApiKey = env.GOOGLE_GEOCODING_API_KEY;
+  const googleGeocodingCountry = env.GOOGLE_GEOCODING_COUNTRY;
 
   const regionRepository = new RegionRepository();
-  const geocodingService = new GeocodingService(googleGeocodingApiKey);
+  const geocodingService = new GeocodingService(
+    googleGeocodingApiKey,
+    googleGeocodingCountry,
+  );
   const regionSearchService = new RegionSearchService(
     regionRepository,
     geocodingService,

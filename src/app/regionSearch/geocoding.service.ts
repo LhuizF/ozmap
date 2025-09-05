@@ -8,7 +8,10 @@ import {
 export class GeocodingService implements IGeocodingService {
   private client: Client;
 
-  constructor(private readonly apiKey: string) {
+  constructor(
+    private readonly apiKey: string,
+    private readonly country: string,
+  ) {
     this.client = new Client({});
   }
   async getCoordinates(address: string): Promise<Coordinates> {
@@ -16,9 +19,9 @@ export class GeocodingService implements IGeocodingService {
       params: {
         address: address,
         key: this.apiKey,
-        // componentRestrictions: {
-        //   country: 'BR', //TODO: adicionar configuração para outros países por env
-        // },
+        components: {
+          country: this.country,
+        },
       },
     };
 
