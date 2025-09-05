@@ -9,6 +9,8 @@ const translation: Translation = {
     invalidBody: 'Invalid request body.',
     internalGeocodingError:
       'An error occurred while trying to convert the address.',
+    badRequest: 'Bad request',
+    resourceNotFound: 'Resource not found',
   },
   validation: {
     nameRequired: 'Name is required',

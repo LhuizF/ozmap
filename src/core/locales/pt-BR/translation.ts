@@ -6,6 +6,8 @@ const translation = {
     internalServerError: 'Erro interno do servidor',
     invalidBody: 'Corpo da requisição inválido.',
     internalGeocodingError: 'Ocorreu um erro ao tentar converter o endereço.',
+    badRequest: 'Requisição inválida',
+    resourceNotFound: 'Recurso não encontrado',
   },
   validation: {
     nameRequired: 'Nome é obrigatório',
