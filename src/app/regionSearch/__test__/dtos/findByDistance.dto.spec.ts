@@ -35,7 +35,7 @@ describe('findByDistanceSchema', () => {
     expect(result.success).to.be.equal(false);
 
     const error = result.error.issues.find((e) => e.path.includes('distance'));
-    expect(error.message).to.contain('A distância deve ser um número positivo');
+    expect(error.message).to.contain('validation.distanceMin');
   });
 
   it('deve herdar as validações de pointSchema', () => {

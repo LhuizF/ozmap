@@ -36,9 +36,7 @@ describe('CreateRegionDTO Schema', () => {
         e.path.includes('name'),
       );
       expect(nameError).to.not.be.equal(undefined);
-      expect(nameError?.message).to.contain(
-        'Nome deve ter pelo menos 3 caracteres',
-      );
+      expect(nameError?.message).to.contain('validation.nameMin');
     });
   });
 
@@ -52,9 +50,7 @@ describe('CreateRegionDTO Schema', () => {
     expect(result.success).to.be.equal(false);
     const nameError = result.error.issues.find((e) => e.path.includes('name'));
     expect(nameError).to.not.be.equal(undefined);
-    expect(nameError?.message).to.contain(
-      'Nome deve ter no máximo 100 caracteres',
-    );
+    expect(nameError?.message).to.contain('validation.nameMax');
 
     it('deve falhar se o nome estiver vazio', () => {
       const invalidData = { ...validRegionData, name: '' };
@@ -118,7 +114,7 @@ describe('CreateRegionDTO Schema', () => {
       );
 
       expect(lonError?.message).to.contain(
-        'Longitude deve ser maior ou igual a -180',
+        'validation.coordinates.longitudeMin',
       );
     });
 
@@ -140,7 +136,7 @@ describe('CreateRegionDTO Schema', () => {
       );
 
       expect(lonError?.message).to.contain(
-        'Longitude deve ser menor ou igual a 180',
+        'validation.coordinates.longitudeMax',
       );
     });
 
@@ -161,7 +157,7 @@ describe('CreateRegionDTO Schema', () => {
         e.path.includes('coordinates'),
       );
       expect(latError?.message).to.contain(
-        'Latitude deve ser maior ou igual a -90',
+        'validation.coordinates.latitudeMin',
       );
     });
 
@@ -182,7 +178,7 @@ describe('CreateRegionDTO Schema', () => {
         e.path.includes('coordinates'),
       );
       expect(latError?.message).to.contain(
-        'Latitude deve ser menor ou igual a 90',
+        'validation.coordinates.latitudeMax',
       );
     });
   });

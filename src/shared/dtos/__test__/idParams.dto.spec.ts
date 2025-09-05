@@ -24,7 +24,7 @@ describe('idParamsSchema', () => {
     expect(result.success).to.be.equal(false);
     if (!result.success) {
       const idError = result.error.issues.find((e) => e.path.includes('id'));
-      expect(idError?.message).to.equal('Id inválido.');
+      expect(idError?.message).to.equal('validation.invalidId');
     }
   });
 

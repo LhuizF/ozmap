@@ -50,7 +50,10 @@ describe('RegionSearchController', () => {
       },
     };
 
-    req = { query: {} };
+    req = {
+      query: {},
+      t: (key: string) => key,
+    };
 
     regionSearchController = new RegionSearchController(
       mockRegionSearchService,

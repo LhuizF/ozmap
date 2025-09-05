@@ -15,7 +15,7 @@ describe('validateBody Middleware', () => {
   let next: sinon.SinonSpy;
 
   beforeEach(() => {
-    req = { body: {} };
+    req = { body: {}, t: (key: string) => key };
     res = {
       status: sinon.stub().returnsThis(),
       json: sinon.stub().returnsThis(),

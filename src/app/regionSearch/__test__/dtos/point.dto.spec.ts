@@ -29,9 +29,7 @@ describe('pointSchema', () => {
     const error = result.error.issues.find((e) => e.path.includes('longitude'));
 
     expect(error).to.not.be.equal(undefined);
-    expect(error?.message).to.contain(
-      'Longitude deve ser menor ou igual a 180',
-    );
+    expect(error?.message).to.contain('validation.coordinates.longitudeMax');
   });
 
   it('deve falhar se a longitude for menor que -180', () => {
@@ -41,9 +39,7 @@ describe('pointSchema', () => {
     expect(result.success).to.deep.equal(false);
     const error = result.error.issues.find((e) => e.path.includes('longitude'));
     expect(error).to.not.be.equal(undefined);
-    expect(error?.message).to.contain(
-      'Longitude deve ser maior ou igual a -180',
-    );
+    expect(error?.message).to.contain('validation.coordinates.longitudeMin');
   });
 
   it('deve falhar se a latitude for maior que 90', () => {
@@ -53,7 +49,7 @@ describe('pointSchema', () => {
     expect(result.success).to.deep.equal(false);
     const error = result.error.issues.find((e) => e.path.includes('latitude'));
     expect(error).to.not.be.equal(undefined);
-    expect(error?.message).to.contain('Latitude deve ser menor ou igual a 90');
+    expect(error?.message).to.contain('validation.coordinates.latitudeMax');
   });
 
   it('deve falhar se a latitude for menor que -90', () => {
@@ -63,6 +59,6 @@ describe('pointSchema', () => {
     expect(result.success).to.deep.equal(false);
     const error = result.error.issues.find((e) => e.path.includes('latitude'));
     expect(error).to.not.be.equal(undefined);
-    expect(error?.message).to.contain('Latitude deve ser maior ou igual a -90');
+    expect(error?.message).to.contain('validation.coordinates.latitudeMin');
   });
 });

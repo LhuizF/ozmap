@@ -18,6 +18,6 @@ describe('findByAddressSchema', () => {
       e.path.includes('address'),
     );
     expect(addressError).to.not.be.equal(undefined);
-    expect(addressError?.message).to.equal('Endereço muito curto');
+    expect(addressError?.message).to.equal('validation.addressMin');
   });
 });

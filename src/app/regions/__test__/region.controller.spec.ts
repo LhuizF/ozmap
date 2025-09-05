@@ -21,7 +21,7 @@ const mockRegionService: IRegionService = {
 
 describe('RegionController', () => {
   let regionController: RegionController;
-  let req: Partial<Request>;
+  let req: Partial<any>;
 
   let res: Partial<Response>;
   let capturedStatus: number = 0;
@@ -50,7 +50,9 @@ describe('RegionController', () => {
       },
     };
 
-    req = {};
+    req = {
+      t: (key: string) => key,
+    };
 
     regionController = new RegionController(mockRegionService);
   });
@@ -124,7 +126,7 @@ describe('RegionController', () => {
 
       expect(capturedStatus).to.equal(204);
       expect(capturedJson).to.deep.equal({
-        message: 'Região deletada com sucesso!',
+        message: 'success.region.deleteMessage',
       });
     });
   });

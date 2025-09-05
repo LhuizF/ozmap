@@ -8,6 +8,7 @@ describe('notFoundHandler Middleware', () => {
   it('deve chamar next com um HttpError de status 404', () => {
     const req: Partial<Request> = {
       originalUrl: '/fake-route',
+      t: (key: string) => key,
     };
     const res: Partial<Response> = {};
     let capturedError: any = null;
@@ -20,6 +21,6 @@ describe('notFoundHandler Middleware', () => {
 
     expect(capturedError).to.be.instanceOf(HttpError);
     expect(capturedError.statusCode).to.equal(404);
-    expect(capturedError.message).to.equal("Rota '/fake-route' não encontrada");
+    expect(capturedError.message).to.equal('errors.routeNotFound');
   });
 });

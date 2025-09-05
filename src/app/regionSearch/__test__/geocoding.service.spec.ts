@@ -15,7 +15,7 @@ describe('GeocodingService', () => {
   beforeEach(() => {
     googleMapsClientStub = sinon.stub(Client.prototype, 'geocode');
 
-    geocodingService = new GeocodingService('fake-api-key');
+    geocodingService = new GeocodingService('fake-api-key', 'BR');
   });
 
   afterEach(() => {
@@ -61,7 +61,7 @@ describe('GeocodingService', () => {
       expect.fail('Deveria ter lançado BadRequestError');
     } catch (error) {
       expect(error).to.be.instanceOf(BadRequestError);
-      expect(error.message).to.equal(`Endereço não encontrado: ${address}`);
+      expect(error.message).to.equal('errors.addressNotFound');
     }
   });
 
@@ -75,9 +75,7 @@ describe('GeocodingService', () => {
       expect.fail('Deveria ter lançado InternalServerError');
     } catch (error) {
       expect(error).to.be.instanceOf(InternalServerError);
-      expect(error.message).to.equal(
-        'Ocorreu um erro ao tentar converter o endereço.',
-      );
+      expect(error.message).to.equal('errors.internalGeocodingError');
     }
   });
 

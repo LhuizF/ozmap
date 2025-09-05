@@ -18,7 +18,7 @@ describe('validateParams Middleware', () => {
   let next: sinon.SinonSpy;
 
   beforeEach(() => {
-    req = { query: {} };
+    req = { query: {}, t: (key: string) => key };
     res = {
       status: sinon.stub().returnsThis(),
       json: sinon.stub().returnsThis(),

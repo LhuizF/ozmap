@@ -113,7 +113,7 @@ describe('RegionService', () => {
         expect.fail('Deveria ter lançado NotFoundError');
       } catch (error) {
         expect(error).to.be.instanceOf(NotFoundError);
-        expect(error.message).to.equal('Região não encontrada');
+        expect(error.message).to.equal('errors.regionNotFound');
       }
     });
   });
@@ -139,7 +139,7 @@ describe('RegionService', () => {
         expect.fail('Deveria ter lançado NotFoundError');
       } catch (error) {
         expect(error).to.be.instanceOf(NotFoundError);
-        expect(error.message).to.equal('Região não encontrada');
+        expect(error.message).to.equal('errors.regionNotFound');
       }
     });
   });
@@ -160,7 +160,7 @@ describe('RegionService', () => {
         expect.fail('Deveria ter lançado NotFoundError');
       } catch (error) {
         expect(error).to.be.instanceOf(NotFoundError);
-        expect(error.message).to.equal('Região não encontrada');
+        expect(error.message).to.equal('errors.regionNotFound');
       }
     });
   });

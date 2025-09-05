@@ -13,7 +13,9 @@ describe('errorHandler Middleware', () => {
   let capturedJson: any;
 
   beforeEach(() => {
-    req = {};
+    req = {
+      t: (key: string) => key,
+    };
 
     capturedStatus = 0;
     capturedJson = null;
@@ -47,7 +49,7 @@ describe('errorHandler Middleware', () => {
     errorHandler(error, req as Request, res as Response, next);
 
     expect(capturedStatus).to.equal(400);
-    expect(capturedJson).to.deep.equal({ message: 'body inválido.' });
+    expect(capturedJson).to.deep.equal({ message: 'errors.invalidBody' });
   });
 
   it('deve lidar com um erro genérico e retornar status 500', () => {
@@ -56,6 +58,8 @@ describe('errorHandler Middleware', () => {
     errorHandler(error, req as Request, res as Response, next);
 
     expect(capturedStatus).to.equal(500);
-    expect(capturedJson).to.deep.equal({ message: 'Internal server error' });
+    expect(capturedJson).to.deep.equal({
+      message: 'errors.internalServerError',
+    });
   });
 });
