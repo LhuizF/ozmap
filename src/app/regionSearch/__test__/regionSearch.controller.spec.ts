@@ -135,7 +135,6 @@ describe('RegionSearchController', () => {
         res as Response,
       );
 
-      // Assert
       expect(capturedStatus).to.equal(200);
       expect(capturedJson).to.deep.equal(paginatedResponse);
     });
