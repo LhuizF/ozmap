@@ -11,7 +11,7 @@ export class GeocodingService implements IGeocodingService {
   constructor(private readonly apiKey: string) {
     this.client = new Client({});
   }
-  async getCoordinates(address: string): Promise<Coordinates | null> {
+  async getCoordinates(address: string): Promise<Coordinates> {
     const request: GeocodeRequest = {
       params: {
         address: address,

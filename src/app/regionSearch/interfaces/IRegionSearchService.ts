@@ -21,7 +21,9 @@ export interface IRegionSearchService {
     page: number,
     pageSize: number,
   ): Promise<PaginatedResponseDto<RegionEntity>>;
-  // listRegionsByAddress(
-  //   address: string,
-  // ): Promise<PaginatedResponseDto<RegionEntity[]>>;
+  listRegionsByAddress(
+    address: string,
+    page: number,
+    pageSize: number,
+  ): Promise<PaginatedResponseDto<RegionEntity>>;
 }

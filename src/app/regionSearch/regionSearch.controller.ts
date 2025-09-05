@@ -31,5 +31,15 @@ export class RegionSearchController {
     res.status(200).json(response);
   }
 
-  // listRegionsByAddress(req: Request, res: Response) {}
+  async listRegionsByAddress(req: Request, res: Response) {
+    const { address, page, pageSize } = req.query;
+
+    const response = await this.regionSearchService.listRegionsByAddress(
+      String(address),
+      Number(page),
+      Number(pageSize),
+    );
+
+    res.status(200).json(response);
+  }
 }

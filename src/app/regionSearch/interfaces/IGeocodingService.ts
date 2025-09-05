@@ -4,5 +4,5 @@ export interface Coordinates {
 }
 
 export interface IGeocodingService {
-  getCoordinates(address: string): Promise<Coordinates | null>;
+  getCoordinates(address: string): Promise<Coordinates>;
 }

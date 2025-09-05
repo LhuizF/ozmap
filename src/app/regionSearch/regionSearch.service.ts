@@ -1,15 +1,19 @@
-import { IRegionRepository } from '../../domain/region/interfaces/IRegionRepository';
-import { RegionEntity } from '../../domain/region/region.entity';
+import { IRegionRepository } from '@/domain/region/interfaces/IRegionRepository';
+import { RegionEntity } from '@/domain/region/region.entity';
 import {
   IRegionSearchService,
   Point,
   PointWithDistance,
 } from './interfaces/IRegionSearchService';
+import { IGeocodingService } from './interfaces/IGeocodingService';
 import { PaginatedResponseDto } from '@/shared/dtos/pagination.dto';
 
 export class RegionSearchService implements IRegionSearchService {
   private readonly EARTH_RADIUS_IN_METERS = 6371000; //6.371 km
-  constructor(private readonly regionRepository: IRegionRepository) {}
+  constructor(
+    private readonly regionRepository: IRegionRepository,
+    private readonly geocodingService: IGeocodingService,
+  ) {}
 
   async listRegionsByPoint(
     point: Point,
@@ -52,6 +56,29 @@ export class RegionSearchService implements IRegionSearchService {
     return {
       data: regions,
       total,
+      page,
+      pageSize,
+      totalPages: Math.ceil(total / pageSize),
+    };
+  }
+
+  async listRegionsByAddress(
+    address: string,
+    page: number,
+    pageSize: number,
+  ): Promise<PaginatedResponseDto<RegionEntity>> {
+    const coordinates = await this.geocodingService.getCoordinates(address);
+
+    const { regions, total } = await this.regionRepository.findByPoint(
+      coordinates.longitude,
+      coordinates.latitude,
+      page,
+      pageSize,
+    );
+
+    return {
+      data: regions,
+      total: total,
       page,
       pageSize,
       totalPages: Math.ceil(total / pageSize),
