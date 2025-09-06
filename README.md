@@ -1,91 +1,62 @@
-# OZmap Challenge: Construindo a Geolocalização do Futuro
+### API de Regiões Geoespaciais
 
-Olá desenvolvedor(a)! Bem-vindo(a) ao Desafio Técnico do OZmap. Este é um projeto que simula um cenário real de nossa
-empresa, onde você irá desempenhar um papel crucial ao desenvolver uma API RESTful robusta para gerenciar localizações.
-Estamos muito animados para ver sua abordagem e solução!
+API RESTful para gerenciar e consultar regiões geográficas (polígonos em GeoJSON). Permite operações de CRUD e buscas espaciais avançadas por ponto, distância e endereço.
 
-## 🌍 **Visão Geral**
+Tech Stack: Node.js, Express, TypeScript, MongoDB, Docker.
 
-Em um mundo conectado e globalizado, a geolocalização se torna cada vez mais essencial. E aqui no OZmap, buscamos sempre
-otimizar e melhorar nossos sistemas. Assim, você encontrará um protótipo que precisa de sua experiência para ser
-corrigido, melhorado e levado ao próximo nível.
+## Pré-requisitos
 
-## 🛠 **Especificações Técnicas**
+Para rodar este projeto, você precisa ter instalado na sua máquina:
 
-- **Node.js**: Versão 22 ou superior.
-- **Framework**: Express.
-- ***Testes**: Mocha/Chai.
-- **Banco de Dados**: Mongo 8+.
-- **ORM**: Mongoose.
-- **Linguagem**: Typescript.
-- **Formatação e Linting**: Eslint + prettier.
-- **Comunicação com MongoDB**: Deve ser feita via container.
+- [Docker](https://www.docker.com/products/docker-desktop/)
+- [Git](https://git-scm.com/) (para clonar o repositório)
 
-## 🔍 **Funcionalidades Esperadas**
+## Como Rodar o Projeto
 
-### Regiões
-- Uma região é definida como um polígono em GeoJSON, um formato padrão para representar formas geográficas.
-- Cada região tem:
-    - **Nome**
-    - **Coordenadas**: um conjunto de coordenadas que formam o polígono
+**1. Clone o Repositório**
+Abra um terminal e clone a branch `ozmap/luiz` do projeto para sua máquina:
 
-- Lista de requisitos:
-    - **CRUD** completo para regiões.
-    - Listar regiões contendo um ponto específico, a partir de uma coordenada como dado de entrada
-    - Listar regiões a uma determinada distância de um ponto
-    - Passar um endereço ( usar um serviço de geolocalização para resolver o endereço em coordenadas) e retornar as
-      regiões que o contêm.
+```bash
 
-- Exemplo de um polígono simples em GeoJSON:
-  ```json
-  {
-    "type": "Polygon",
-    "coordinates": [
-      [
-        [longitude1, latitude1],
-        [longitude2, latitude2],
-        [longitude3, latitude3],
-        [longitude1, latitude1] // Fecha o polígono
-      ]
-    ]
-  }
-  ```
+git clone -b ozmap/luiz https://github.com/LhuizF/ozmap
+```
 
-### Testes
+**2. Navegue até a Pasta do Projeto**
 
-- Unitários e de integração.
+```bash
+cd ozmap
+```
 
-## 🌟 **Diferenciais**
+**3. Configure o ambiente**
+No arquivo docker-compose.yml, localize a variável `GOOGLE_GEOCODING_API_KEY` e substitua `your_api_key_here` sua pela sua chave da API do Google Geocoding.
 
-- Documentação completa da API.
-- Internacionalização.
-- Cobertura de código.
-- Controle de busca de endereços por código de país, configurável por variável de ambiente
+```yml
+services:
+  api:
+    # ...
+    environment:
+      # ...
+      GOOGLE_GEOCODING_API_KEY: SUA_CHAVE_DE_API_AQUI
+```
 
-## ⚖ **Critérios de Avaliação**
+**4. Inicie a Aplicação com Docker Compose**
 
-1. Organização e clareza do código.
-2. Estruturação do projeto.
-3. Qualidade e eficiência do código.
-4. Cobertura e qualidade de testes.
-5. Pontos diferenciais citados acima.
-6. Tempo de entrega (será considerado apenas o cumprimento do prazo, sem distinção entre entregas feitas no primeiro ou
-   no último dia, com ênfase na qualidade da entrega).
-7. Padronização e clareza das mensagens de erro.
-8. Organização dos commits.
-9. Implementação de logs.
-10. Adesão às boas práticas de API RESTful.
+Execute o seguinte comando.
+Na primeira vez, ele irá baixar as imagens necessárias, construir as imagens do backend e iniciar os contêineres. Isso pode levar alguns minutos.
 
-## 🚀 **Entrega**
+```bash
+docker-compose up --build
+```
 
-1. Crie um repositório público com a base desse código.
-2. Crie uma branch para realizar o seu trabalho.
-3. Ao finalizar, faça um pull request para a branch `main` do seu repositório.
-4. A revisão do teste será feita **em cima do PR aberto** para a branch `main`!
-5. Envie um email para `rh@ozmap.com.br` informando que o teste foi concluído.
-6. Aguarde nosso feedback.
+- A flag `--build` força a reconstrução das imagens, garantindo que as últimas alterações do código sejam utilizadas.
 
----
+**5. Parando a Aplicação**
+Para parar todos os serviços, pressione `Ctrl + C` no terminal onde o compose está rodando, ou execute o seguinte comando na pasta do projeto:
 
-Estamos ansiosos para ver sua implementação e criatividade em ação! Boa sorte e que a força do código esteja com você!
-🚀
+```bash
+docker-compose down
+```
+
+📚 Documentação
+A documentação completa da API (OpenAPI) está disponível em:
+http://localhost:3333/api-docs

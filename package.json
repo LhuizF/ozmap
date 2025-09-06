@@ -4,23 +4,64 @@
   "description": "DevOZ - Tech test",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/server.ts",
-    "test": "mocha --require ts-node/register ./src/**/*.spec.ts --exit"
+    "dev": "nodemon --watch src --ext ts --exec ts-node -r tsconfig-paths/register src/server.ts",
+    "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
+    "test": "mocha --require ts-node/register --require tsconfig-paths/register ./src/**/*.spec.ts --exit",
+    "test:cov": "nyc npm run test"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@asteasolutions/zod-to-openapi": "^8.1.0",
+    "@googlemaps/google-maps-services-js": "^3.4.2",
+    "dotenv": "^17.2.2",
     "express": "^4.18.2",
-    "mongoose": "^7.5.3"
+    "express-async-errors": "^3.1.1",
+    "i18next": "^25.5.2",
+    "i18next-http-middleware": "^3.8.0",
+    "mongoose": "^7.5.3",
+    "swagger-ui-express": "^5.0.1",
+    "zod": "^4.1.5"
   },
   "devDependencies": {
+    "@eslint/js": "^9.34.0",
     "@types/chai": "^4.3.6",
     "@types/express": "^4.17.18",
     "@types/mocha": "^10.0.2",
     "@types/node": "^20.8.0",
+    "@types/supertest": "^6.0.3",
+    "@types/swagger-ui-express": "^4.1.8",
+    "@typescript-eslint/eslint-plugin": "^8.42.0",
+    "@typescript-eslint/parser": "^8.42.0",
+    "chai": "^6.0.1",
+    "eslint": "^9.34.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "globals": "^16.3.0",
+    "jiti": "^2.5.1",
     "mocha": "^10.2.0",
     "nodemon": "^3.0.1",
+    "nyc": "^17.1.0",
+    "prettier": "^3.6.2",
+    "sinon": "^21.0.0",
+    "supertest": "^7.1.4",
     "ts-node": "^10.9.1",
-    "typescript": "^5.2.2"
+    "tsc-alias": "^1.8.16",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.2.2",
+    "typescript-eslint": "^8.42.0"
+  },
+  "nyc": {
+    "exclude": [
+      "**/*.spec.ts",
+      "**/*.config.ts",
+      "**/*.docs.ts",
+      "**/interfaces/**",
+      "coverage"
+    ],
+    "reporter": [
+      "html"
+    ],
+    "all": true
   }
 }

@@ -7,6 +7,17 @@
     "sourceMap": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    },
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "typeRoots": [
+      "./src/@types",
+      "./node_modules/@types"
+    ]
   },
   "types": [
     "reflect-metadata",
@@ -14,5 +25,5 @@
   ],
   "exclude": [
     "node_modules"
-  ]
+  ],
 }
